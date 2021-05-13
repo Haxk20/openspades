@@ -47,6 +47,13 @@ namespace spades {
 			bool depthHack = false;
 			/** Specifies whether the model casts a shadow. */
 			bool castShadow = true;
+			// ADDED: PlayerID field, enemy field
+			// if -1, then the model for this param isn't a player model
+			// otherwise, it is the ID of the associated player
+			int playerID = -1;
+			bool teamId; // team id of player (if we care about playerId)
+			// END OF ADDED
+			
 			/**
 			 * Specifies that the model is not an actual object in the virtual world, thus does not
 			 * affect the shading of other objects and does not appear in a mirror.
@@ -174,3 +181,4 @@ namespace spades {
 		};
 	} // namespace client
 } // namespace spades
+

@@ -401,6 +401,8 @@ namespace spades {
 
 			void NetLog(const char *format, ...);
 
+			static Client *globalInstance; // ADDED: Global instance
+
 		protected:
 			~Client();
 
@@ -492,6 +494,11 @@ namespace spades {
 			void LocalPlayerHurt(HurtType type, bool sourceGiven, Vector3 source) override;
 			void LocalPlayerBuildError(BuildFailureReason reason) override;
 			// IWorldListener end
+			// ADDED: helper functions
+			static bool AreCheatsEnabled(); // 'cheats', i.e. spectator wallhack or player names
+			static bool WallhackActive();
+			static spades::Vector3 TeamCol(unsigned int teamId);
+			// END OF ADDED
 		};
 	} // namespace client
 } // namespace spades
