@@ -880,9 +880,9 @@ namespace spades {
 			param.customColor = MakeVector3(col.x / 255.f, col.y / 255.f, col.z / 255.f);
 
 			// ADDED: Set the param to include player ID, player team id
-			param.playerID = GetPlayer()->GetId();
+			param.playerID = GetPlayer().GetId();
 			if (client::Client::WallhackActive()) {
-				param.teamId = GetPlayer()->GetTeamId();
+				param.teamId = GetPlayer().GetTeamId();
 			}
 			// END OF ADDED
 

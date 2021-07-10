@@ -630,24 +630,26 @@ namespace spades {
 			// ADDED: Draw player names
 			if (dd_specNames && AreCheatsEnabled()) {
 				for (int i = 0; i < world->GetNumPlayerSlots(); ++i) {
-					Player *pIter = world->GetPlayer(i);
+					if (world->GetPlayer(i)) {
+						Player &pIter = world->GetPlayer(i).value();
 
-					if (!pIter || !pIter->IsAlive() || pIter->GetTeamId() >= 2) {
-						continue;
+						if (!pIter.IsAlive() || pIter.GetTeamId() >= 2) {
+							continue;
+						}
+
+						Vector3 posxyz = Project(pIter.GetEye());
+						if (posxyz.z <= 0) {
+							continue;
+						}
+						Vector2 pos = {posxyz.x, posxyz.y};
+
+						IFont &font = fontManager->GetGuiFont();
+						Vector2 size = font.Measure(pIter.GetName());
+						pos.x -= size.x * .5f;
+						pos.y -= size.y;
+						font.DrawShadow(pIter.GetName(), pos, 0.85, MakeVector4(1, 1, 1, 1),
+						                 MakeVector4(0, 0, 0, 0.5));
 					}
-
-					Vector3 posxyz = Project(pIter->GetEye());
-					if (posxyz.z <= 0) {
-						continue;
-					}
-					Vector2 pos = {posxyz.x, posxyz.y};
-
-					IFont *font = fontManager->GetGuiFont();
-					Vector2 size = font->Measure(pIter->GetName());
-					pos.x -= size.x * .5f;
-					pos.y -= size.y;
-					font->DrawShadow(pIter->GetName(), pos, 0.85, MakeVector4(1, 1, 1, 1),
-					                 MakeVector4(0, 0, 0, 0.5));
 				}
 			}
 			// END OF ADDED

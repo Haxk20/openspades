@@ -389,40 +389,44 @@ namespace spades {
 				World *w = client->GetWorld();
 				if (!w)
 					return true;
-				Player *p = w->GetLocalPlayer();
-				if (!p)
+
+				if (!w->GetLocalPlayer())
 					return true;
-				IntVector3 clr = p->GetBlockColor();
+
+				Player &p = w->GetLocalPlayer().value();
+				IntVector3 clr = p.GetBlockColor();
 				clr.x = 255 - clr.x;
 				clr.y = 255 - clr.y;
 				clr.z = 255 - clr.z;
-				p->SetHeldBlockColor(clr);
+				p.SetHeldBlockColor(clr);
 				client->net->SendHeldBlockColor();
 				return true;
 			} else if (EqualsIgnoringCase(keyName, cg_keyPaletteRandom)) {
 				World *w = client->GetWorld();
 				if (!w)
 					return true;
-				Player *p = w->GetLocalPlayer();
-				if (!p)
+
+				if (!w->GetLocalPlayer())
 					return true;
-				IntVector3 clr = p->GetBlockColor();
+				Player &p = w->GetLocalPlayer().value();
+				IntVector3 clr = p.GetBlockColor();
 				clr.x = SampleRandomInt(0, 255);
 				clr.y = SampleRandomInt(0, 255);
 				clr.z = SampleRandomInt(0, 255);
 				colors[defaultColor] = clr;
-				p->SetHeldBlockColor(clr);
+				p.SetHeldBlockColor(clr);
 				client->net->SendHeldBlockColor();
 				return true;
 			} else if (EqualsIgnoringCase(keyName, cg_keyPaletteMix)) {
 				World *w = client->GetWorld();
 				if (!w)
 					return true;
-				Player *p = w->GetLocalPlayer();
-				if (!p)
-					return true;
 
-				IntVector3 clr_a = p->GetBlockColor();
+				if (!w->GetLocalPlayer())
+					return true;
+				Player &p = w->GetLocalPlayer().value();
+
+				IntVector3 clr_a = p.GetBlockColor();
 				double a_x = clr_a.x / 255.0;
 				double a_y = clr_a.y / 255.0;
 				double a_z = clr_a.z / 255.0;
@@ -432,7 +436,7 @@ namespace spades {
 
 				client->CaptureColor();
 
-				IntVector3 clr_b = p->GetBlockColor();
+				IntVector3 clr_b = p.GetBlockColor();
 				double b_x = clr_b.x / 255.0;
 				double b_y = clr_b.y / 255.0;
 				double b_z = clr_b.z / 255.0;
@@ -454,7 +458,7 @@ namespace spades {
 				clr_b.z = (int)b_z;
 
 				colors[defaultColor] = clr_b;
-				p->SetHeldBlockColor(clr_b);
+				p.SetHeldBlockColor(clr_b);
 				client->net->SendHeldBlockColor();
 				return true;
 			} else {

@@ -786,10 +786,10 @@ namespace spades {
 			if (!globalInstance->world->GetLocalPlayer())
 				return false;
 
-			Player *p = globalInstance->world->GetLocalPlayer();
+			Player &p = globalInstance->world->GetLocalPlayer().value();
 
-			return (p->GetTeamId() >= 2) && // on spectator team
-			       p->IsAlive();            // alive
+			return (p.GetTeamId() >= 2) && // on spectator team
+			       p.IsAlive();            // alive
 		}
 
 		bool Client::WallhackActive() { return AreCheatsEnabled() && dd_specWallhack; }
