@@ -629,11 +629,11 @@ namespace spades {
 
 			// ADDED: Draw player names
 			if (dd_specNames && AreCheatsEnabled()) {
-				for (int i = 0; i < world->GetNumPlayerSlots(); ++i) {
+				for (unsigned long i = 0; i < world->GetNumPlayerSlots(); ++i) {
 					if (world->GetPlayer(i)) {
 						Player &pIter = world->GetPlayer(i).value();
 
-						if (!pIter.IsAlive() || pIter.GetTeamId() >= 2) {
+						if (!world->GetPlayer(i) || !pIter.IsAlive() || pIter.GetTeamId() >= 2) {
 							continue;
 						}
 
